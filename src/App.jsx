@@ -20,28 +20,49 @@ export const App = () => {
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, []);
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setSubmitError(null);
 
-    fetch("https://happy-thoughts-api-4ful.onrender.com/thoughts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message }),
-    })
-      .then(async (res) => {
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data?.message || "Error");
-        }
-        return data;
-      })
-      .then((newThought) => {
-        setThoughts((prev) => [newThought, ...prev]);
-        setMessage("");
-      })
-      .catch((err) => setSubmitError(err.message));
+    const trimmed = message.trim();
+
+    if (!trimmed) {
+      setSubmitError("Write a thought first.");
+      return;
+    }
+    if (trimmed.length < 5) {
+      setSubmitError("Your thought must be at least 5 signs.");
+      return;
+    }
+    if (trimmed.length > 140) {
+      setSubmitError("Your thought can not be more than 140 signs.");
+      return;
+    }
+    //felmeddelande när texten är annat än 5-140 tecken
+    try {
+      const res = await fetch("https://happy-thoughts-api-4ful.onrender.com/thoughts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: trimmed }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        const apiMessage =
+          data?.message ||
+          data?.error ||
+          "Could not post thought. Please try again.";
+        throw new Error(apiMessage);
+      }
+
+      setThoughts((prev) => [data, ...prev]);
+      setMessage("");
+    } catch (err) {
+      setSubmitError(err.message);
+    }
   };
+
   //sorterar senaste posten först
   const sortedThoughts = [...thoughts].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -53,19 +74,17 @@ export const App = () => {
     const diffSec = Math.floor((now - created) / 1000);
 
     if (diffSec < 60) return `${diffSec} seconds ago`;
-
     const diffMin = Math.floor(diffSec / 60);
     if (diffMin < 60) return `${diffMin} minutes ago`;
-
     const diffHours = Math.floor(diffMin / 60);
     if (diffHours < 24) return `${diffHours} hours ago`;
 
     return created.toLocaleDateString("sv-SE");
-
-
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>Error: {error}</p>
   };
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error}</p>
+
   //field för post, hämtar och skriver ut meddelande och datum
   return (
     <main className="app">
