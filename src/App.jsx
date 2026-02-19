@@ -23,12 +23,12 @@ export const App = () => {
 
   //hämtar och skriver ut meddelande och datum
   return (
-    <div>
+    <main className="app">
       {thoughts.map((thought) => (
-        <article key={thought._id}>
+        <article className="thought-card" key={thought._id}>
           <p>{thought.message}</p>
           <small> {new Date(thought.createdAt).toLocaleDateString("sv-SE")}</small>
         </article>
-      ))}</div>
+      ))}</main>
   );
 };
