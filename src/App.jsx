@@ -48,20 +48,20 @@ export const App = () => {
   //field för post, hämtar och skriver ut meddelande och datum
   return (
     <main className="app">
-      <form onSubmit={handleSubmit} className="thought-card">
+      <form onSubmit={handleSubmit} className="message-card">
         <label htmlFor="message">What´s making you happy right now?</label>
         <input
           id="message"
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Skriv din tanke..." />
-        <button type="submit">❤️ Send Happy Thought ❤️</button>
+          placeholder="Write your thoughts..." />
+        <button className="submit-btn" type="submit">❤️ Send Happy Thought ❤️</button>
         {submitError && <p className="error-text">{submitError}</p>}
       </form>
 
       {thoughts.map((thought) => (
-        <article key={thought._id}>
+        <article key={thought._id} className="thought-card">
           <p>{thought.message}</p>
           <small> {new Date(thought.createdAt).toLocaleDateString("sv-SE")}</small>
         </article>

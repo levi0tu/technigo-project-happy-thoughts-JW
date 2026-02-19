@@ -13,15 +13,39 @@ code {
 }
 
 .app {
-  max-width: 620px;
+  max-width: 500px;
   display: grid;
-  gap: 1.5;
+  gap: 2rem;
   margin: 0 auto;
+}
+
+.message-card {
+  background: rgb(240, 239, 239);
+  border: 1px solid #666;
+  box-shadow: 8px 8px 0 #000;
+  padding: 1rem 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.message-card input {
+  width: 100%;
+  min-height: 50px;
+  box-sizing: border-box;
+}
+
+.message-card .submit-btn {
+  justify-self: start;
+  height: 35px;
+  border-radius: 1rem;
+  background: #fab0b0;
+  border: none;
+  padding: 0 0.8rem;
 }
 
 .thought-card {
   background: white;
-  border: 1px solid #222;
+  border: 1px solid #666;
   box-shadow: 8px 8px 0 #000;
   padding: 1rem;
 }
