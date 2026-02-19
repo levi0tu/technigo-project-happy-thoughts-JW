@@ -49,3 +49,12 @@ code {
   box-shadow: 8px 8px 0 #000;
   padding: 1rem;
 }
+
+.thought-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.time-text {
+  color: #aaa;
+}

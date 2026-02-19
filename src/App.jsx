@@ -42,9 +42,30 @@ export const App = () => {
       })
       .catch((err) => setSubmitError(err.message));
   };
-  if (loading) return <p>Loading...</p>
-  if (error) return <p>Error: {error}</p>
+  //sorterar senaste posten först
+  const sortedThoughts = [...thoughts].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+  //skriver ut hur länge sen posten skrevs
+  const timeAgo = (createdAt) => {
+    const now = new Date();
+    const created = new Date(createdAt);
+    const diffSec = Math.floor((now - created) / 1000);
 
+    if (diffSec < 60) return `${diffSec} seconds ago`;
+
+    const diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return `${diffMin} minutes ago`;
+
+    const diffHours = Math.floor(diffMin / 60);
+    if (diffHours < 24) return `${diffHours} hours ago`;
+
+    return created.toLocaleDateString("sv-SE");
+
+
+    if (loading) return <p>Loading...</p>
+    if (error) return <p>Error: {error}</p>
+  };
   //field för post, hämtar och skriver ut meddelande och datum
   return (
     <main className="app">
@@ -60,10 +81,13 @@ export const App = () => {
         {submitError && <p className="error-text">{submitError}</p>}
       </form>
 
-      {thoughts.map((thought) => (
+      {sortedThoughts.map((thought) => (
         <article key={thought._id} className="thought-card">
           <p>{thought.message}</p>
-          <small> {new Date(thought.createdAt).toLocaleDateString("sv-SE")}</small>
+          <div className="thought-footer">
+            <div className="likes"></div>
+            <small className="time-text"> {timeAgo(thought.createdAt)}</small>
+          </div>
         </article>
       ))}</main>
   );
