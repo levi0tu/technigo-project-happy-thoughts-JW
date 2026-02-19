@@ -21,9 +21,14 @@ export const App = () => {
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error: {error}</p>
 
-  return (<div>
-    {thoughts.map((thought) => (
-      <p key={thought._id}>{thought.message}</p>
-    ))}</div>
+  //hämtar och skriver ut meddelande och datum
+  return (
+    <div>
+      {thoughts.map((thought) => (
+        <article key={thought._id}>
+          <p>{thought.message}</p>
+          <small> {new Date(thought.createdAt).toLocaleDateString("sv-SE")}</small>
+        </article>
+      ))}</div>
   );
 };
