@@ -85,7 +85,7 @@ export const App = () => {
   //hämta och uppdatera likes
   const handleLike = async (id) => {
     try {
-      const res = await fetch("https://happy-thoughts-api-4ful.onrender.com/thoughts",
+      const res = await fetch(`https://happy-thoughts-api-4ful.onrender.com/thoughts/${id}/like`,
         { method: "POST" }
       );
       if (!res.ok) throw new Error("Could not like thought");

@@ -75,7 +75,7 @@ body {
   background: #f7b3b3;
 }
 
-@media (min-width 768px) {
+@media (min-width: 768px) {
   :root {
     margin: 0;
   }
