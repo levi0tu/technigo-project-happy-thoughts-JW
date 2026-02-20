@@ -82,6 +82,20 @@ export const App = () => {
     return created.toLocaleDateString("sv-SE");
   };
 
+  //hämta och uppdatera likes
+  const handleLike = async (id) => {
+    try {
+      const res = await fetch("https://happy-thoughts-api-4ful.onrender.com/thoughts",
+        { method: "POST" }
+      );
+      if (!res.ok) throw new Error("Could not like thought");
+      setThoughts((prev) =>
+        prev.map((thought) =>
+          thought._id === id ? { ...thought, hearts: thought.hearts + 1 } : thought));
+    } catch (err) { console.error(err); }
+  }
+
+
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error: {error}</p>
 
@@ -104,7 +118,8 @@ export const App = () => {
         <article key={thought._id} className="thought-card">
           <p>{thought.message}</p>
           <div className="thought-footer">
-            <div className="likes"></div>
+            <div>
+              <button type="button" className={`heart-btn ${thought.hearts === 0 ? "is-zero" : "is-liked"}`} onClick={() => handleLike(thought._id)}>❤️ </button> x {thought.hearts}</div>
             <small className="time-text"> {timeAgo(thought.createdAt)}</small>
           </div>
         </article>
