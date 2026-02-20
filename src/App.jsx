@@ -92,7 +92,7 @@ export const App = () => {
       setThoughts((prev) =>
         prev.map((thought) =>
           thought._id === id ? { ...thought, hearts: thought.hearts + 1 } : thought));
-    } catch (err) { console.error(err); }
+    } catch (err) { setSubmitError("Could not like thought. Please try again"); }
   }
 
 
@@ -119,7 +119,8 @@ export const App = () => {
           <p>{thought.message}</p>
           <div className="thought-footer">
             <div>
-              <button type="button" className={`heart-btn ${thought.hearts === 0 ? "is-zero" : "is-liked"}`} onClick={() => handleLike(thought._id)}>❤️ </button> x {thought.hearts}</div>
+              <button type="button"
+                aria-label={`Like thought: ${thought.message}`} className={`heart-btn ${thought.hearts === 0 ? "is-zero" : "is-liked"}`} onClick={() => handleLike(thought._id)}>❤️ </button> x {thought.hearts}</div>
             <small className="time-text"> {timeAgo(thought.createdAt)}</small>
           </div>
         </article>
