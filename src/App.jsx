@@ -111,7 +111,7 @@ export const App = () => {
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Write your thoughts..." />
         <button className="submit-btn" type="submit">❤️ Send Happy Thought ❤️</button>
-        {submitError && <p className="error-text">{submitError}</p>}
+        {submitError && <p>{submitError}</p>}
       </form>
 
       {sortedThoughts.map((thought) => (

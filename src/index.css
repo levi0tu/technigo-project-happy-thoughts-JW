@@ -59,6 +59,13 @@ body {
   color: #aaa;
 }
 
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: stretch;
+  gap: 1.5rem;
+}
+
 .heart-btn {
   width: 40px;
   height: 40px;
@@ -78,5 +85,24 @@ body {
 @media (min-width: 768px) {
   :root {
     margin: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app {
+    max-width: 760px;
+    gap: 2rem;
+  }
+
+  .message-card,
+  .thought-card {
+    padding: 1.75rem;
+    font-size: 1.2rem;
+  }
+
+  .submit-btn {
+    font-size: 1rem;
+    height: 38px;
+    width: 260px;
   }
 }
